@@ -10,7 +10,6 @@ class UserRepository {
     required String password,
   }) async {
     String token = await api.auth(email, password);
-    print(token);
     User user = User(
       id: 0,
       email: email,

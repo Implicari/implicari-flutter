@@ -5,7 +5,7 @@ import 'package:implicari/model/course_model.dart';
 
 
 class CourseRepository {
-  CourseAPI api = CourseAPI();
+  final CourseAPI api = CourseAPI();
 
   Future<List<Course>> getTeacherCourses() async {
       return await api.getTeacherCourses();

@@ -35,8 +35,6 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
         on<LoggedIn>((event, emit) async {
             emit(AuthenticationLoading());
 
-            print(event.user);
-
             await userRepository.setToken(event.user.token);
 
             emit(AuthenticationAuthenticated());
