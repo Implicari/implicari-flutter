@@ -44,6 +44,7 @@ dependencies:
   path: ^1.8.2
   meta: ^1.8.0
   bloc: ^8.1.1
+  shared_preferences: ^2.0.18
 
 dev_dependencies:
   flutter_test:

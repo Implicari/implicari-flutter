@@ -1,44 +1,35 @@
 import 'dart:async';
 import 'package:implicari/model/user_model.dart';
-import 'package:implicari/model/api_model.dart';
 import 'package:implicari/api_connection/api_connection.dart';
-import 'package:implicari/dao/user_dao.dart';
 
 class UserRepository {
-  final userDao = UserDao();
+  UserAPI api = UserAPI();
 
   Future<User> authenticate ({
     required String email,
     required String password,
   }) async {
-    UserLogin userLogin = UserLogin(
-        email: email,
-        password: password
-    );
-    Token token = await getToken(userLogin);
+    String token = await api.auth(email, password);
+    print(token);
     User user = User(
       id: 0,
       email: email,
-      token: token.token,
+      token: token,
     );
     return user;
   }
 
-  Future<void> persistToken ({
-    required User user
-  }) async {
-    // write token with the user to the database
-    await userDao.createUser(user);
-  }
-
-  Future <void> deleteToken({
-    required int id
-  }) async {
-    await userDao.deleteUser(id);
-  }
-
   Future <bool> hasToken() async {
-    bool result = await userDao.checkUser(0);
+    bool result = await api.isAuthenticated();
     return result;
   }
+
+  Future<void> setToken(String token) async {
+      await api.setToken(token);
+  }
+
+  Future<void> logout() async {
+
+  }
+
 }

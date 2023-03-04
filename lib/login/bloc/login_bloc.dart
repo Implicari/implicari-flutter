@@ -19,6 +19,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
                   emit(LoginInitial());
 
                   try {
+
+                    print(event);
                     final user = await userRepository.authenticate(
                       email: event.email,
                       password: event.password,

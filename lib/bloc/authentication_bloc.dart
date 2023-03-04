@@ -27,7 +27,7 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
         on<LoggedOut>((event, emit) async {
           emit(AuthenticationLoading());
 
-          await userRepository.deleteToken(id: 0);
+          await userRepository.logout();
 
           emit(AuthenticationUnauthenticated());
         });
@@ -35,7 +35,9 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
         on<LoggedIn>((event, emit) async {
             emit(AuthenticationLoading());
 
-            await userRepository.persistToken(user: event.user);
+            print(event.user);
+
+            await userRepository.setToken(event.user.token);
 
             emit(AuthenticationAuthenticated());
         });

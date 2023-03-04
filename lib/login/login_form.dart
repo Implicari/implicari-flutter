@@ -11,12 +11,12 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  final _usernameController = TextEditingController(text: 'saul.hormazabal@gmail.com');
+  final _usernameController = TextEditingController(text: 'edna.krabappel@implicari.localhost');
   final _passwordController = TextEditingController(text: 'password');
 
   @override
   Widget build(BuildContext context) {
-    _onLoginButtonPressed() {
+    handleLogin() {
       BlocProvider.of<LoginBloc>(context).add(LoginButtonPressed(
         email: _usernameController.text,
         password: _passwordController.text,
@@ -48,6 +48,7 @@ class _LoginFormState extends State<LoginForm> {
                       ),
                       controller: _usernameController,
                     ),
+
                     TextFormField(
                       decoration: const InputDecoration(
                           labelText: 'password',
@@ -56,6 +57,7 @@ class _LoginFormState extends State<LoginForm> {
                       controller: _passwordController,
                       obscureText: true,
                     ),
+
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.85,
                       height: MediaQuery.of(context).size.width * 0.22,
@@ -63,17 +65,16 @@ class _LoginFormState extends State<LoginForm> {
                         padding: const EdgeInsets.only(top: 30.0),
                         child: ElevatedButton(
                           onPressed: state is! LoginLoading
-                              ? _onLoginButtonPressed
+                              ? handleLogin
                               : null,
                           child: const Text(
                             'Login',
-                            style: TextStyle(
-                              fontSize: 24.0,
-                            ),
+                            style: TextStyle(fontSize: 24.0),
                           ),
                         ),
                       ),
                     ),
+
                     Container(
                       child: state is LoginLoading
                           ? const CircularProgressIndicator()
