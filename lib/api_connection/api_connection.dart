@@ -65,7 +65,7 @@ class UserAPI extends ImplicariApi {
       debugPrint(json.decode(response.body).toString());
 
       if (response.statusCode == 200) {
-        return json.decode(response.body)['token'];
+        return json.decode(utf8.decode(response.bodyBytes))['token'];
       } else {
         throw Exception(json.decode(response.body));
       }
@@ -88,7 +88,7 @@ class CourseAPI extends ImplicariApi {
     final http.Response response = await get('$_url/api/courses/teacher/');
 
     if (response.statusCode == 200) {
-      final List result = jsonDecode(response.body)['results'];
+      final List result = jsonDecode(utf8.decode(response.bodyBytes))['results'];
       return result.map((e) => Course.fromJson(e)).toList();
     } else {
       throw Exception(response.reasonPhrase);
@@ -101,7 +101,7 @@ class CourseAPI extends ImplicariApi {
     final http.Response response = await get('$_url/api/courses/parent/');
 
     if (response.statusCode == 200) {
-      final List result = jsonDecode(response.body)['results'];
+      final List result = jsonDecode(utf8.decode(response.bodyBytes))['results'];
       return result.map((e) => Course.fromJson(e)).toList();
     } else {
       throw Exception(response.reasonPhrase);
