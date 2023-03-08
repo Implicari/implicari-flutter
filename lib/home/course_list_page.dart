@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:implicari/home/course_detail_page.dart';
 
 import 'package:implicari/repository/course_repository.dart';
 import 'package:implicari/model/course_model.dart';
@@ -60,16 +61,17 @@ class CourseListPage extends StatelessWidget {
                             shrinkWrap: true,
                             itemCount: courses.length,
                             itemBuilder: (_, index) {
-                                return  Card(
-                                    color: Theme.of(context).primaryColor,
-                                    child: Padding(
-                                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                                        child: Text(
-                                            courses[index].name,
-                                            style: const TextStyle(color: Colors.white),
-                                        ),
-                                    ),
+
+                                return ElevatedButton(
+                                  child: Text(courses[index].name),
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => CourseDetailPage(id: courses[index].id, name: courses[index].name)),
+                                    );
+                                  },
                                 );
+
                             },
                         ),
                     ],

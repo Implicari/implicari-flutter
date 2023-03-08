@@ -45,6 +45,7 @@ dependencies:
   meta: ^1.8.0
   bloc: ^8.1.1
   shared_preferences: ^2.0.18
+  intl: ^0.18.0
 
 dev_dependencies:
   flutter_test:

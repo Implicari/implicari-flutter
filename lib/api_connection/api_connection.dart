@@ -26,27 +26,39 @@ abstract class ImplicariApi {
     return;
   }
 
-  /// Borrar token
   Future<void> removeToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('token');
     return;
   }
 
- 
-  Future<http.Response> get(String uri) async {
+  Future<dynamic> getAuth(String uri) async {
       String token = await getToken();
 
-      final http.Response response = await http.get(
-        Uri.parse(uri),
+      return await get(
+        uri,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Token $token',
         },
       );
+  }
 
-      return response;
-    }
+  Future<dynamic> get(String uri, {Map<String, String>? headers}) async {
+
+      final http.Response response = await http.get(
+        Uri.parse(uri),
+        headers: headers,
+      );
+
+      if (response.statusCode == 200) {
+        return json.decode(utf8.decode(response.bodyBytes));
+      } else {
+        throw Exception(utf8.decode(response.bodyBytes));
+      }
+
+  }
+
 }
 
 
@@ -61,8 +73,6 @@ class UserAPI extends ImplicariApi {
         },
         body: jsonEncode({ 'email': email, 'password': password }),
       );
-
-      debugPrint(json.decode(response.body).toString());
 
       if (response.statusCode == 200) {
         return json.decode(utf8.decode(response.bodyBytes))['token'];
@@ -80,33 +90,26 @@ class UserAPI extends ImplicariApi {
 }
 
 
-
 class CourseAPI extends ImplicariApi {
 
   Future<List<Course>> getTeacherCourses() async {
+      final data = await getAuth('$_url/api/courses/teacher/');
+      final List results = data['results'];
 
-    final http.Response response = await get('$_url/api/courses/teacher/');
-
-    if (response.statusCode == 200) {
-      final List result = jsonDecode(utf8.decode(response.bodyBytes))['results'];
-      return result.map((e) => Course.fromJson(e)).toList();
-    } else {
-      throw Exception(response.reasonPhrase);
-    }
-
+      return results.map((e) => Course.fromJson(e)).toList();
   }
 
   Future<List<Course>> getParentCourses() async {
+      final data = await getAuth('$_url/api/courses/parent/');
+      final List results = data['results'];
 
-    final http.Response response = await get('$_url/api/courses/parent/');
+      return results.map((e) => Course.fromJson(e)).toList();
+  }
 
-    if (response.statusCode == 200) {
-      final List result = jsonDecode(utf8.decode(response.bodyBytes))['results'];
-      return result.map((e) => Course.fromJson(e)).toList();
-    } else {
-      throw Exception(response.reasonPhrase);
-    }
+  Future<CourseRetrieve> getCourse(int id) async {
+      final Map<String, dynamic> data = await getAuth('$_url/api/courses/$id/');
 
+      return CourseRetrieve.fromJson(data);
   }
 
 }

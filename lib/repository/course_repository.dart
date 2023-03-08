@@ -14,4 +14,8 @@ class CourseRepository {
   Future<List<Course>> getParentCourses() async {
       return await api.getParentCourses();
   }
+
+  Future<CourseRetrieve> getCourse(int id) async {
+      return await api.getCourse(id);
+  }
 }
