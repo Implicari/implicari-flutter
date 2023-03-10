@@ -21,7 +21,7 @@ class CourseRetrieve {
 
   late int id;
   late String name;
-  late Event nextEvent;
+  Event? nextEvent;
 
   CourseRetrieve({
       required this.id,
@@ -32,7 +32,14 @@ class CourseRetrieve {
   CourseRetrieve.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
-    nextEvent = Event.fromJson(json['next_event']);
+
+    print(json['next_event']);
+
+    if (json['next_event'] != null ) {
+        nextEvent = Event.fromJson(json['next_event']);
+    }
+
+    print(nextEvent);
   }
 
 }

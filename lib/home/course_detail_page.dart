@@ -42,8 +42,10 @@ class CourseDetailPage extends StatelessWidget {
 
         else if (snapshot.hasData) {
 
-            CourseRetrieve course = snapshot.data ?? CourseRetrieve(id: 0, name: '', nextEvent: Event(description: '', id: 0));
+            CourseRetrieve? course = snapshot.data;
             DateFormat formatMonth = DateFormat('MMM');
+
+            print(course!.nextEvent != null ? 'Próximo evento' : 'Sin evento');
 
             return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
@@ -58,6 +60,7 @@ class CourseDetailPage extends StatelessWidget {
                                 textAlign: TextAlign.left,
                             ),
                         ),
+                        course.nextEvent != null ?
                         Card(
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
@@ -68,9 +71,9 @@ class CourseDetailPage extends StatelessWidget {
                                         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                                         child: Column(
                                           children: [
-                                            Text(formatMonth.format(course.nextEvent.date).toUpperCase()),
+                                            Text(formatMonth.format(course.nextEvent!.date).toUpperCase()),
                                             Text(
-                                              course.nextEvent.date.day.toString(),
+                                              course.nextEvent!.date.day.toString(),
                                               style: const TextStyle(
                                                 fontSize: 24,
                                                 fontWeight: FontWeight.bold,
@@ -83,13 +86,13 @@ class CourseDetailPage extends StatelessWidget {
                                     Column(
                                       mainAxisAlignment: MainAxisAlignment.start,
                                       children: [
-                                        Text(course.nextEvent.description),
+                                        Text(course.nextEvent!.description),
                                         Row(
                                           mainAxisAlignment: MainAxisAlignment.start,
                                           children: [
                                             const Icon(Icons.access_time, color: Colors.grey, size: 14),
                                             const SizedBox(width: 8),
-                                            Text(course.nextEvent.time),
+                                            Text(course.nextEvent!.time),
                                           ],
                                         ),
                                       ],
@@ -98,7 +101,15 @@ class CourseDetailPage extends StatelessWidget {
                                 ),
                               ],
                             ),
-                          ),
+                          ) :  const Card(
+                              color: Colors.white70,
+                        child: Center(
+                            child: Padding(
+                                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                                child: Text('No hay un próximo evento'),
+                            ),
+                        ),
+                    ),
 
                                             ],
                 ),
