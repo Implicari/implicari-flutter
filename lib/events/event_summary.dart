@@ -46,12 +46,14 @@ class EventSummary extends StatelessWidget {
                   ],
                 ),
               ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(event.description),
-                  timeWidget,
-                ],
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(event.description),
+                    timeWidget,
+                  ],
+                ),
               ),
             ],
           ),
