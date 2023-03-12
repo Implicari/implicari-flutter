@@ -8,20 +8,16 @@ import 'package:implicari/login/login_page.dart';
 import 'package:implicari/home/home.dart';
 import 'package:implicari/common/common.dart';
 
-
 void main() {
   final userRepository = UserRepository();
 
-  runApp(
-      BlocProvider<AuthenticationBloc>(
-        create: (context) {
-          return AuthenticationBloc(
-              userRepository: userRepository
-          )..add(AppStarted());
-        },
-        child: App(userRepository: userRepository),
-      )
-  );
+  runApp(BlocProvider<AuthenticationBloc>(
+    create: (context) {
+      return AuthenticationBloc(userRepository: userRepository)
+        ..add(AppStarted());
+    },
+    child: App(userRepository: userRepository),
+  ));
 }
 
 class App extends StatelessWidget {
@@ -30,7 +26,7 @@ class App extends StatelessWidget {
   const App({super.key, required this.userRepository});
 
   @override
-  Widget build (BuildContext context) {
+  Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
         primarySwatch: Colors.green,
@@ -38,7 +34,6 @@ class App extends StatelessWidget {
       ),
       home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {
-
           if (state is AuthenticationUninitialized) {
             return const SplashPage();
           }
@@ -48,7 +43,9 @@ class App extends StatelessWidget {
           }
 
           if (state is AuthenticationUnauthenticated) {
-            return LoginPage(userRepository: userRepository,);
+            return LoginPage(
+              userRepository: userRepository,
+            );
           }
 
           return const LoadingIndicator();

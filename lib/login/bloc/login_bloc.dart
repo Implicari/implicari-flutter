@@ -13,26 +13,21 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc({
     required this.userRepository,
     required this.authenticationBloc,
-  })  : super(LoginInitial()) {
+  }) : super(LoginInitial()) {
+    on<LoginButtonPressed>((event, emit) async {
+      emit(LoginInitial());
 
-          on<LoginButtonPressed>((event, emit) async {
-                  emit(LoginInitial());
+      try {
+        final user = await userRepository.authenticate(
+          email: event.email,
+          password: event.password,
+        );
 
-                  try {
-
-                    final user = await userRepository.authenticate(
-                      email: event.email,
-                      password: event.password,
-                    );
-
-                    authenticationBloc.add(LoggedIn(user: user));
-                    emit(LoginInitial());
-                  } catch (error) {
-                    emit(LoginFaliure(error: error.toString()));
-                  }
-          });
-
-
-        }
-
+        authenticationBloc.add(LoggedIn(user: user));
+        emit(LoginInitial());
+      } catch (error) {
+        emit(LoginFaliure(error: error.toString()));
+      }
+    });
+  }
 }

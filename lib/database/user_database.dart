@@ -2,12 +2,9 @@ import 'dart:async';
 
 import 'package:sqflite/sqflite.dart';
 
-
 const userTable = 'userTable';
 
-
 class DatabaseProvider {
-
   late Database database;
 
   Future open() async {
@@ -25,5 +22,4 @@ class DatabaseProvider {
       },
     );
   }
-
 }

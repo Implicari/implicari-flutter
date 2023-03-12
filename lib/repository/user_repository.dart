@@ -5,7 +5,7 @@ import 'package:implicari/api_connection/api_connection.dart';
 class UserRepository {
   UserAPI api = UserAPI();
 
-  Future<User> authenticate ({
+  Future<User> authenticate({
     required String email,
     required String password,
   }) async {
@@ -18,17 +18,14 @@ class UserRepository {
     return user;
   }
 
-  Future <bool> hasToken() async {
+  Future<bool> hasToken() async {
     bool result = await api.isAuthenticated();
     return result;
   }
 
   Future<void> setToken(String token) async {
-      await api.setToken(token);
+    await api.setToken(token);
   }
 
-  Future<void> logout() async {
-
-  }
-
+  Future<void> logout() async {}
 }
