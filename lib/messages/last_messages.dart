@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:implicari/events/event_summary.dart';
-import 'package:implicari/model/event_model.dart';
-import 'package:implicari/repository/event_repository.dart';
+import 'package:implicari/messages/message_summary.dart';
+import 'package:implicari/model/message_model.dart';
+import 'package:implicari/repository/message_repository.dart';
 
 class LastMessages extends StatelessWidget {
   final int courseId;
@@ -10,16 +10,16 @@ class LastMessages extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final EventRepository eventRepository = EventRepository();
+    final MessageRepository messageRepository = MessageRepository();
 
-    return FutureBuilder<List<Event>>(
-      future: eventRepository.getEventsUpcoming(courseId),
-      builder: (BuildContext context, AsyncSnapshot<List<Event>> snapshot) {
+    return FutureBuilder<List<Message>>(
+      future: messageRepository.getMessages(courseId),
+      builder: (BuildContext context, AsyncSnapshot<List<Message>> snapshot) {
         List<Widget> children;
 
         if (snapshot.hasData && snapshot.data != null) {
           children = snapshot.data!
-              .map((event) => EventSummary(event: event))
+              .map((message) => MessageSummary(message: message))
               .toList();
         } else if (snapshot.hasError) {
           children = <Widget>[
