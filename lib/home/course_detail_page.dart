@@ -52,6 +52,13 @@ class CourseDetailPage extends StatelessWidget {
       CourseRetrieve? course = snapshot.data;
 
       return Card(
+        shape: RoundedRectangleBorder(
+          side: BorderSide(
+            color: Theme.of(context).colorScheme.primary,
+          ),
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
+        ),
+        color: Colors.white,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[

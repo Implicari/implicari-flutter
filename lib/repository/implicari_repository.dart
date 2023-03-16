@@ -29,6 +29,21 @@ abstract class ImplicariRepository {
     return;
   }
 
+  Future<dynamic> post(String uri, Object body, {Map<String, String>? headers}) async {
+    final http.Response response = await http.post(
+      Uri.parse(baseUrl + uri),
+      headers: headers,
+      body: jsonEncode(body),
+    );
+
+    if (response.statusCode == 200) {
+      return json.decode(utf8.decode(response.bodyBytes));
+    } else {
+      throw Exception(utf8.decode(response.bodyBytes));
+    }
+  }
+
+
   Future<dynamic> getAuth(String uri) async {
     String token = await getToken();
 
@@ -53,4 +68,19 @@ abstract class ImplicariRepository {
       throw Exception(utf8.decode(response.bodyBytes));
     }
   }
+
+  Future<dynamic> postAuth(String uri, Object body) async {
+    String token = await getToken();
+
+    return await post(
+      uri,
+      body,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Token $token',
+      },
+    );
+  }
+
+
 }

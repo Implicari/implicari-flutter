@@ -1,20 +1,35 @@
 import 'dart:async';
 
-import 'package:implicari/api_connection/api_connection.dart';
 import 'package:implicari/model/course_model.dart';
+import 'package:implicari/repository/implicari_repository.dart';
 
-class CourseRepository {
-  final CourseAPI api = CourseAPI();
+class CourseRepository extends ImplicariRepository {
 
   Future<List<Course>> getTeacherCourses() async {
-    return await api.getTeacherCourses();
+    final data = await getAuth('/api/courses/teacher/');
+    final List results = data['results'];
+
+    return results.map((e) => Course.fromJson(e)).toList();
   }
 
   Future<List<Course>> getParentCourses() async {
-    return await api.getParentCourses();
+    final data = await getAuth('/api/courses/parent/');
+    final List results = data['results'];
+
+    return results.map((e) => Course.fromJson(e)).toList();
   }
 
   Future<CourseRetrieve> getCourse(int id) async {
-    return await api.getCourse(id);
+    final Map<String, dynamic> data = await getAuth('/api/courses/$id/');
+
+    return CourseRetrieve.fromJson(data);
+  }
+
+  Future<CourseRetrieve> createCourse(String name) async {
+
+    final Map<String, dynamic> data = await postAuth('/api/courses/create/', {'name': name});
+
+    return CourseRetrieve.fromJson(data);
+
   }
 }

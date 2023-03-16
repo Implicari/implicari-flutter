@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:implicari/courses/course_create_page.dart';
 import 'package:implicari/home/course_detail_page.dart';
 
 import 'package:implicari/repository/course_repository.dart';
@@ -17,14 +18,27 @@ class CourseListPage extends StatelessWidget {
           future: courseRepository.getTeacherCourses(),
           builder:
               (BuildContext context, AsyncSnapshot<List<Course>> snapshot) {
-            return createBody(context, snapshot, 'Profesor');
+            return createBody(context, snapshot, 'Profesor', Icons.co_present);
           },
         ),
         FutureBuilder<List<Course>>(
           future: courseRepository.getParentCourses(),
           builder:
               (BuildContext context, AsyncSnapshot<List<Course>> snapshot) {
-            return createBody(context, snapshot, 'Apoderado');
+            return createBody(
+                context, snapshot, 'Apoderado', Icons.escalator_warning);
+          },
+        ),
+        const SizedBox(height: 40),
+        ElevatedButton(
+          child: const Text('crear curso'),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const CourseCreatePage(),
+              ),
+            );
           },
         ),
       ],
@@ -32,7 +46,7 @@ class CourseListPage extends StatelessWidget {
   }
 
   Widget createBody(BuildContext context, AsyncSnapshot<List<Course>> snapshot,
-      String title) {
+      String title, IconData icon) {
     if (snapshot.hasError) {
       return Center(child: Text('Error: ${snapshot.error}'));
     } else if (snapshot.hasData) {
@@ -57,15 +71,39 @@ class CourseListPage extends StatelessWidget {
               shrinkWrap: true,
               itemCount: courses.length,
               itemBuilder: (_, index) {
-                return ElevatedButton(
-                  child: Text(courses[index].name),
-                  onPressed: () {
+                return GestureDetector(
+                  child: Card(
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      borderRadius: const BorderRadius.all(Radius.circular(12)),
+                    ),
+                    color: Colors.transparent,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 20,
+                        horizontal: 20,
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(icon),
+                          const SizedBox(width: 20),
+                          Text(courses[index].name),
+                        ],
+                      ),
+                    ),
+                  ),
+                  onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => CourseDetailPage(
-                              id: courses[index].id,
-                              name: courses[index].name)),
+                        builder: (context) => CourseDetailPage(
+                          id: courses[index].id,
+                          name: courses[index].name,
+                        ),
+                      ),
                     );
                   },
                 );

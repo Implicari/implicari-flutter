@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import 'package:implicari/repository/user_repository.dart';
-import 'package:implicari/model/user_model.dart';
+import 'package:implicari/model/token_model.dart';
 
 part 'authentication_event.dart';
 part 'authentication_state.dart';

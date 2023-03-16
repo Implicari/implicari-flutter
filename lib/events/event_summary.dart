@@ -25,6 +25,13 @@ class EventSummary extends StatelessWidget {
     }
 
     return Card(
+      shape: RoundedRectangleBorder(
+        side: BorderSide(
+          color: Theme.of(context).colorScheme.primary,
+        ),
+        borderRadius: const BorderRadius.all(Radius.circular(12)),
+      ),
+      color: Colors.white,
       child: Column(
         children: <Widget>[
           Row(

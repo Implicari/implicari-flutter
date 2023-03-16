@@ -1,20 +1,14 @@
 class User {
-  int id;
-  String email;
-  String token;
+  late int id;
+  late String email;
 
   User({
     required this.id,
     required this.email,
-    required this.token,
   });
 
-  factory User.fromDatabaseJson(Map<String, dynamic> data) => User(
-        id: data['id'],
-        email: data['email'],
-        token: data['token'],
-      );
-
-  Map<String, dynamic> toDatabaseJson() =>
-      {'id': id, 'email': email, 'token': token};
+  User.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    email = json['email'];
+  }
 }

@@ -9,12 +9,19 @@ class MessageSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      shape: RoundedRectangleBorder(
+        side: BorderSide(
+          color: Theme.of(context).colorScheme.primary,
+        ),
+        borderRadius: const BorderRadius.all(Radius.circular(12)),
+      ),
+      color: Colors.white,
       child: Column(
         children: <Widget>[
           Row(
             children: [
               const Padding(
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                 child: Icon(Icons.email),
               ),
               Expanded(
