@@ -15,6 +15,5 @@ class Token {
         token: data['token'],
       );
 
-  Map<String, dynamic> toDatabaseJson() =>
-      {'id': id, 'email': email, 'token': token};
+  Map<String, dynamic> toDatabaseJson() => {'id': id, 'email': email, 'token': token};
 }

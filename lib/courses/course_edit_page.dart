@@ -1,28 +1,52 @@
 import 'package:flutter/material.dart';
-import 'package:implicari/home/home.dart';
+import 'package:implicari/model/course_model.dart';
 import 'package:implicari/repository/course_repository.dart';
 
-class CourseCreatePage extends StatefulWidget {
-  const CourseCreatePage({super.key});
+class CourseEditPage extends StatefulWidget {
+  final int id;
+
+  const CourseEditPage({super.key, required this.id});
 
   @override
-  State<CourseCreatePage> createState() => _CourseCreatePage();
+  // ignore: no_logic_in_create_state
+  State<CourseEditPage> createState() => _CourseEditPage();
 }
 
-class _CourseCreatePage extends State<CourseCreatePage> {
+class _CourseEditPage extends State<CourseEditPage> {
   final _formKey = GlobalKey<FormState>();
 
   final _nameController = TextEditingController();
 
+  final CourseRepository courseRepository = CourseRepository();
+
   @override
   Widget build(BuildContext context) {
-    final CourseRepository courseRepository = CourseRepository();
-
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Crear curso'),
+        title: const Text('Editar curso'),
+        actions: [
+          TextButton(
+            onPressed: () {},
+            child: const Icon(Icons.confirmation_num),
+          ),
+        ],
       ),
-      body: Padding(
+      body: FutureBuilder<CourseRetrieve>(
+        future: courseRepository.getCourse(widget.id),
+        builder: (BuildContext context, AsyncSnapshot<CourseRetrieve> snapshot) {
+          return buildBody(context, snapshot);
+        },
+      ),
+    );
+  }
+
+  Widget buildBody(BuildContext context, AsyncSnapshot<CourseRetrieve> snapshot) {
+    if (snapshot.hasError) {
+      return const Text('Error');
+    } else if (snapshot.hasData) {
+      _nameController.text = snapshot.data!.name;
+
+      return Padding(
         padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
         child: Form(
           key: _formKey,
@@ -46,6 +70,9 @@ class _CourseCreatePage extends State<CourseCreatePage> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size.fromHeight(50),
+                  ),
                   onPressed: () {
                     // Validate returns true if the form is valid, or false otherwise.
                     if (_formKey.currentState!.validate()) {
@@ -55,23 +82,20 @@ class _CourseCreatePage extends State<CourseCreatePage> {
                         const SnackBar(content: Text('Processing Data')),
                       );
 
-                      courseRepository.createCourse(_nameController.text);
+                      courseRepository.updateCourse(widget.id, _nameController.text);
 
-                      Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(
-                          builder: (BuildContext context) => const HomePage(),
-                        ),
-                        (Route<dynamic> route) => false,
-                      );
+                      Navigator.of(context).pop();
                     }
                   },
-                  child: const Text('crear'),
+                  child: const Text('editar'),
                 ),
               ),
             ],
           ),
         ),
-      ),
-    );
+      );
+    } else {
+      return const CircularProgressIndicator();
+    }
   }
 }

@@ -4,7 +4,6 @@ import 'package:implicari/model/course_model.dart';
 import 'package:implicari/repository/implicari_repository.dart';
 
 class CourseRepository extends ImplicariRepository {
-
   Future<List<Course>> getTeacherCourses() async {
     final data = await getAuth('/api/courses/teacher/');
     final List results = data['results'];
@@ -26,10 +25,15 @@ class CourseRepository extends ImplicariRepository {
   }
 
   Future<CourseRetrieve> createCourse(String name) async {
-
     final Map<String, dynamic> data = await postAuth('/api/courses/create/', {'name': name});
 
     return CourseRetrieve.fromJson(data);
+  }
 
+  Future<CourseRetrieve> updateCourse(int id, String name) async {
+    final String url = '/api/courses/$id/update/';
+    final Map<String, dynamic> data = await patchAuth(url, {'name': name});
+
+    return CourseRetrieve.fromJson(data);
   }
 }

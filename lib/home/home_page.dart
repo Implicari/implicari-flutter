@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:implicari/home/course_list_page.dart';
+import 'package:implicari/courses/course_list_page.dart';
 import 'package:implicari/home/profile_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -28,9 +28,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Implicari'),
       ),
-      body: Center(
-        child: widgetOptions.elementAt(_selectedIndex),
-      ),
+      body: widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(

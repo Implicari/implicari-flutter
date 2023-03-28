@@ -12,8 +12,14 @@ class MessageRepository extends ImplicariRepository {
   }
 
   Future<Message> getMessage(int courseId, int messageId) async {
+    final Map<String, dynamic> data = await getAuth('/api/courses/$courseId/events/$messageId');
+
+    return Message.fromJson(data);
+  }
+
+  Future<Message> create({required int courseId, required Message message}) async {
     final Map<String, dynamic> data =
-        await getAuth('/api/courses/$courseId/events/$messageId');
+        await postAuth('/api/courses/$courseId/messages/create/', message.toJson());
 
     return Message.fromJson(data);
   }

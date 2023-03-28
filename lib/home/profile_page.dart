@@ -26,12 +26,10 @@ class ProfilePage extends StatelessWidget {
                 User? user = snapshot.data;
 
                 return Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                  padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
                   child: Card(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 20),
+                      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                       child: Row(
                         children: [
                           const Icon(Icons.email),
@@ -55,11 +53,7 @@ class ProfilePage extends StatelessWidget {
               }
             },
           ),
-          Expanded(child: Container()),
-          const Expanded(
-            child: Icon(Icons.tag_faces, size: 100, color: Colors.black12),
-          ),
-          Expanded(child: Container()),
+          const Icon(Icons.tag_faces, size: 100, color: Colors.black12),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
             child: SizedBox(
@@ -80,7 +74,6 @@ class ProfilePage extends StatelessWidget {
               ),
             ),
           ),
-          Expanded(child: Container()),
         ],
       ),
     );

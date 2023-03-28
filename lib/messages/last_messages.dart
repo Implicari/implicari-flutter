@@ -3,24 +3,29 @@ import 'package:implicari/messages/message_summary.dart';
 import 'package:implicari/model/message_model.dart';
 import 'package:implicari/repository/message_repository.dart';
 
-class LastMessages extends StatelessWidget {
+import 'message_create_page.dart';
+
+class LastMessages extends StatefulWidget {
   final int courseId;
 
   const LastMessages({super.key, required this.courseId});
 
   @override
+  State<LastMessages> createState() => _LastMessages();
+}
+
+class _LastMessages extends State<LastMessages> {
+  @override
   Widget build(BuildContext context) {
     final MessageRepository messageRepository = MessageRepository();
 
     return FutureBuilder<List<Message>>(
-      future: messageRepository.getMessages(courseId),
+      future: messageRepository.getMessages(widget.courseId),
       builder: (BuildContext context, AsyncSnapshot<List<Message>> snapshot) {
         List<Widget> children;
 
         if (snapshot.hasData && snapshot.data != null) {
-          children = snapshot.data!
-              .map((message) => MessageSummary(message: message))
-              .toList();
+          children = snapshot.data!.map((message) => MessageSummary(message: message)).toList();
         } else if (snapshot.hasError) {
           children = <Widget>[
             const Icon(
@@ -50,12 +55,29 @@ class LastMessages extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            const Padding(
-              padding: EdgeInsets.only(top: 30, left: 20),
-              child: Text(
-                'Últimos mensajes',
-                style: TextStyle(fontWeight: FontWeight.bold),
-                textAlign: TextAlign.left,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'Últimos mensajes',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.left,
+                  ),
+                  ElevatedButton(
+                    child: const Text('crear'),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MessageCreatePage(courseId: widget.courseId),
+                        ),
+                      ).then((value) => setState(() {}));
+                    },
+                  ),
+                ],
               ),
             ),
             Column(children: children),

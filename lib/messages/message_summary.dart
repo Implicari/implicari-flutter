@@ -32,8 +32,7 @@ class MessageSummary extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        const Icon(Icons.access_time,
-                            color: Colors.grey, size: 14),
+                        const Icon(Icons.access_time, color: Colors.grey, size: 14),
                         const SizedBox(width: 8),
                         Text(message.creationTimestamp.toString()),
                       ],

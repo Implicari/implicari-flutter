@@ -7,12 +7,10 @@ import 'package:implicari/model/token_model.dart';
 part 'authentication_event.dart';
 part 'authentication_state.dart';
 
-class AuthenticationBloc
-    extends Bloc<AuthenticationEvent, AuthenticationState> {
+class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> {
   final UserRepository userRepository;
 
-  AuthenticationBloc({required this.userRepository})
-      : super(AuthenticationUnauthenticated()) {
+  AuthenticationBloc({required this.userRepository}) : super(AuthenticationUnauthenticated()) {
     on<AppStarted>((event, emit) async {
       bool hasToken = await userRepository.hasToken();
 

@@ -37,8 +37,7 @@ class EventSummary extends StatelessWidget {
           Row(
             children: [
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                 child: Column(
                   children: [
                     Text(formatMonth.format(event.date).toUpperCase()),

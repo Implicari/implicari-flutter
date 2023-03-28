@@ -4,8 +4,7 @@ class UserLogin {
 
   UserLogin({required this.email, required this.password});
 
-  Map<String, dynamic> toDatabaseJson() =>
-      {'email': email, 'password': password};
+  Map<String, dynamic> toDatabaseJson() => {'email': email, 'password': password};
 }
 
 class Token {

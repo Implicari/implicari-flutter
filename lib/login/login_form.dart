@@ -10,8 +10,7 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  final _usernameController =
-      TextEditingController(text: 'edna.krabappel@implicari.localhost');
+  final _usernameController = TextEditingController(text: 'tia.rosita@implicari.localhost');
   final _passwordController = TextEditingController(text: 'password');
 
   @override
@@ -71,9 +70,7 @@ class _LoginFormState extends State<LoginForm> {
                     ),
                   ),
                   Container(
-                    child: state is LoginLoading
-                        ? const CircularProgressIndicator()
-                        : null,
+                    child: state is LoginLoading ? const CircularProgressIndicator() : null,
                   ),
                 ],
               ),

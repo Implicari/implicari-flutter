@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class ImplicariRepository {
-  final String baseUrl = 'http://implicari.localhost:8000';
+  final String baseUrl = 'http://192.168.221.99:8000';
 
   Future<String> getToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -29,6 +29,22 @@ abstract class ImplicariRepository {
     return;
   }
 
+  Future<dynamic> patch(String uri, Object body, {Map<String, String>? headers}) async {
+    final http.Response response = await http.patch(
+      Uri.parse(baseUrl + uri),
+      headers: headers,
+      body: jsonEncode(body),
+    );
+
+    print(response.statusCode);
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return json.decode(utf8.decode(response.bodyBytes));
+    } else {
+      throw Exception(utf8.decode(response.bodyBytes));
+    }
+  }
+
   Future<dynamic> post(String uri, Object body, {Map<String, String>? headers}) async {
     final http.Response response = await http.post(
       Uri.parse(baseUrl + uri),
@@ -36,13 +52,14 @@ abstract class ImplicariRepository {
       body: jsonEncode(body),
     );
 
-    if (response.statusCode == 200) {
+    print(response.statusCode);
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
       return json.decode(utf8.decode(response.bodyBytes));
     } else {
       throw Exception(utf8.decode(response.bodyBytes));
     }
   }
-
 
   Future<dynamic> getAuth(String uri) async {
     String token = await getToken();
@@ -82,5 +99,16 @@ abstract class ImplicariRepository {
     );
   }
 
+  Future<dynamic> patchAuth(String uri, Object body) async {
+    String token = await getToken();
 
+    return await patch(
+      uri,
+      body,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Token $token',
+      },
+    );
+  }
 }
