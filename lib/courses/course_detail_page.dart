@@ -17,8 +17,6 @@ class CourseDetailPage extends StatefulWidget {
 }
 
 class _CourseDetailPage extends State<CourseDetailPage> {
-  // const CourseDetailPage({super.key, required this.id, required this.name});
-
   @override
   Widget build(BuildContext context) {
     final CourseRepository courseRepository = CourseRepository();
@@ -48,31 +46,30 @@ class _CourseDetailPage extends State<CourseDetailPage> {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              padding: const EdgeInsets.only(top: 30, left: 20),
-              child: const Text(
-                'Profe',
-                style: TextStyle(fontWeight: FontWeight.bold),
-                textAlign: TextAlign.start,
-              ),
+      body: ListView(
+        children: [
+          const Padding(
+            padding: EdgeInsets.only(top: 30, left: 20),
+            child: Text(
+              'Profe',
+              style: TextStyle(fontWeight: FontWeight.bold),
+              textAlign: TextAlign.start,
             ),
-            FutureBuilder<CourseRetrieve>(
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: FutureBuilder<CourseRetrieve>(
               future: getCourse,
               builder: (BuildContext context, AsyncSnapshot<CourseRetrieve> snapshot) {
                 return createBody(context, snapshot);
               },
             ),
-            const SizedBox(height: 20),
-            EventsUpcoming(courseId: widget.id),
-            const SizedBox(height: 20),
-            LastMessages(courseId: widget.id),
-          ],
-        ),
+          ),
+          const SizedBox(height: 20),
+          EventsUpcoming(courseId: widget.id),
+          const SizedBox(height: 20),
+          LastMessages(courseId: widget.id),
+        ],
       ),
     );
   }

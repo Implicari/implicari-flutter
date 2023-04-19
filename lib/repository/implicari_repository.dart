@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class ImplicariRepository {
-  final String baseUrl = 'http://192.168.221.99:8000';
+  final String baseUrl = 'http://localhost:8000';
 
   Future<String> getToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

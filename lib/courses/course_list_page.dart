@@ -18,7 +18,8 @@ class _CourseListPageState extends State<CourseListPage> {
   late Future<List<Course>> getTeacherCourses;
   late Future<List<Course>> getParentCourses;
 
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
 
   @override
   void initState() {
@@ -30,34 +31,36 @@ class _CourseListPageState extends State<CourseListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Cursos'),
-      ),
-      body: RefreshIndicator(
-        key: _refreshIndicatorKey,
-        onRefresh: () async {
-          setState(() {
-            getTeacherCourses = courseRepository.getTeacherCourses();
-            getParentCourses = courseRepository.getParentCourses();
-          });
-        },
-        child: ListView(
-          children: [
-            FutureBuilder<List<Course>>(
-              future: getTeacherCourses,
-              builder: (BuildContext context, AsyncSnapshot<List<Course>> snapshot) {
-                return createBody(context, snapshot, 'Profesor', Icons.co_present);
-              },
-            ),
-            FutureBuilder<List<Course>>(
-              future: getParentCourses,
-              builder: (BuildContext context, AsyncSnapshot<List<Course>> snapshot) {
-                return createBody(context, snapshot, 'Apoderado', Icons.escalator_warning);
-              },
-            ),
-            const SizedBox(height: 40),
-            ElevatedButton(
+    return RefreshIndicator(
+      key: _refreshIndicatorKey,
+      onRefresh: () async {
+        setState(() {
+          getTeacherCourses = courseRepository.getTeacherCourses();
+          getParentCourses = courseRepository.getParentCourses();
+        });
+      },
+      child: ListView(
+        children: [
+          FutureBuilder<List<Course>>(
+            future: getTeacherCourses,
+            builder:
+                (BuildContext context, AsyncSnapshot<List<Course>> snapshot) {
+              return createBody(
+                  context, snapshot, 'Profesor', Icons.co_present);
+            },
+          ),
+          FutureBuilder<List<Course>>(
+            future: getParentCourses,
+            builder:
+                (BuildContext context, AsyncSnapshot<List<Course>> snapshot) {
+              return createBody(
+                  context, snapshot, 'Apoderado', Icons.escalator_warning);
+            },
+          ),
+          const SizedBox(height: 40),
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: ElevatedButton(
               child: const Text('crear curso'),
               onPressed: () {
                 Navigator.push(
@@ -71,22 +74,14 @@ class _CourseListPageState extends State<CourseListPage> {
                     }));
               },
             ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          // Show refresh indicator programmatically on button tap.
-          _refreshIndicatorKey.currentState?.show();
-        },
-        icon: const Icon(Icons.refresh),
-        label: const Text('Show Indicator'),
+          ),
+        ],
       ),
     );
   }
 
-  Widget createBody(
-      BuildContext context, AsyncSnapshot<List<Course>> snapshot, String title, IconData icon) {
+  Widget createBody(BuildContext context, AsyncSnapshot<List<Course>> snapshot,
+      String title, IconData icon) {
     if (snapshot.hasError) {
       return Center(child: Text('Error: ${snapshot.error}'));
     } else if (snapshot.hasData) {
@@ -107,7 +102,9 @@ class _CourseListPageState extends State<CourseListPage> {
                 textAlign: TextAlign.left,
               ),
             ),
-            ...courses.map((course) => CourseSummary(course: course, icon: icon)).toList(),
+            ...courses
+                .map((course) => CourseSummary(course: course, icon: icon))
+                .toList(),
           ],
         ),
       );

@@ -25,7 +25,36 @@ class _EventsUpcoming extends State<EventsUpcoming> {
         List<Widget> children;
 
         if (snapshot.hasData && snapshot.data != null) {
-          children = snapshot.data!.map((event) => EventSummary(event: event)).toList();
+          if (snapshot.data!.isEmpty) {
+            children = <Widget>[
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(
+                    color: Colors.grey,
+                    width: 1,
+                  ),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Icon(
+                      Icons.error_outline,
+                      color: Colors.grey,
+                      size: 24,
+                    ),
+                    SizedBox(width: 16),
+                    Text('No hay eventos', style: TextStyle(color: Colors.grey)),
+                  ],
+                ),
+              )
+            ];
+          } else {
+            children = snapshot.data!.map((event) => EventSummary(event: event)).toList();
+          }
+          // children = snapshot.data!.map((event) => EventSummary(event: event)).toList();
         } else if (snapshot.hasError) {
           children = <Widget>[
             const Icon(
@@ -79,7 +108,10 @@ class _EventsUpcoming extends State<EventsUpcoming> {
                 ],
               ),
             ),
-            Column(children: children),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(children: children),
+            ),
           ],
         );
       },

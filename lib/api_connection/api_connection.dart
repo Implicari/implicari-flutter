@@ -6,7 +6,7 @@ import 'package:implicari/model/course_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class ImplicariApi {
-  final String _url = 'http://192.168.221.99:8000';
+  final String _url = 'http://localhost:8000';
 
   Future<String> getToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

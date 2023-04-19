@@ -68,25 +68,20 @@ class _MessageCreatePage extends State<MessageCreatePage> {
               Center(
                 child: ElevatedButton(
                   onPressed: () {
-                    // Validate returns true if the form is valid, or false otherwise.
                     if (_formKey.currentState!.validate()) {
-                      // If the form is valid, display a snackbar. In the real world,
-                      // you'd often call a server or save the information in a database.
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Processing Data')),
-                      );
-
-                      Message message = Message(
+                      messageRepository
+                          .create(
+                        courseId: widget.courseId,
                         subject: _subjectController.text,
                         body: _messageController.text,
-                      );
+                      )
+                          .then((value) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Mensaje creado: ${value.subject}')),
+                        );
 
-                      messageRepository.create(
-                        courseId: widget.courseId,
-                        message: message,
-                      );
-
-                      Navigator.of(context).pop();
+                        Navigator.of(context).pop();
+                      });
                     }
                   },
                   child: const Text('crear'),

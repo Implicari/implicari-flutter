@@ -1,8 +1,8 @@
 class Message {
   int? id;
   late String subject;
-  late String body;
-  DateTime? creationTimestamp;
+  String? body;
+  DateTime? sentAt;
 
   Message({
     required this.subject,
@@ -13,7 +13,7 @@ class Message {
     id = json['id'];
     subject = json['subject'];
     body = json['body'];
-    creationTimestamp = DateTime.parse(json['creation_timestamp']);
+    sentAt = DateTime.parse(json['sent_at']);
   }
 
   Map<String, dynamic> toJson() {

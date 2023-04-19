@@ -56,7 +56,7 @@ class EventSummary extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(event.description),
+                    Text(event.name),
                     timeWidget,
                   ],
                 ),
