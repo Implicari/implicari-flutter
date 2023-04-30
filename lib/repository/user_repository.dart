@@ -48,7 +48,7 @@ class UserRepository extends ImplicariRepository {
   }
 
   Future<User> getUser() async {
-    final Map<String, dynamic> data = await getAuth('/api/user/');
+    final Map<String, dynamic> data = await getAuth('/api/profile/');
 
     return User.fromJson(data);
   }
