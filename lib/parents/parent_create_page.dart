@@ -23,7 +23,7 @@ class _ParentCreatePage extends State<ParentCreatePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Crear estudiante'),
+        title: const Text('Crear apoderado'),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
@@ -36,7 +36,7 @@ class _ParentCreatePage extends State<ParentCreatePage> {
                 controller: _firstNameController,
                 validator: (value) {
                   if (value == null || value.isEmpty || value.trim().isEmpty) {
-                    return 'Escriba un nombre de su estudiante';
+                    return 'Escriba un nombre de su apoderado';
                   }
                   return null;
                 },
@@ -50,7 +50,7 @@ class _ParentCreatePage extends State<ParentCreatePage> {
                 controller: _lastNameController,
                 validator: (value) {
                   if (value == null || value.isEmpty || value.trim().isEmpty) {
-                    return 'Escriba los apellidos de su estudiante';
+                    return 'Escriba los apellidos de su apoderado';
                   }
                   return null;
                 },
@@ -65,7 +65,7 @@ class _ParentCreatePage extends State<ParentCreatePage> {
                 // The validator receives the text that the user has entered.
                 validator: (value) {
                   if (value == null || value.isEmpty || value.trim().isEmpty) {
-                    return 'Escriba el RUN de su estudiante';
+                    return 'Escriba el RUN de su apoderado';
                   }
                   return null;
                 },
@@ -88,7 +88,7 @@ class _ParentCreatePage extends State<ParentCreatePage> {
                       )
                           .then((value) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Estudiante creado: ${value.firstName}')),
+                          SnackBar(content: Text('Apoderado creado: ${value.firstName}')),
                         );
 
                         Navigator.of(context).pop();

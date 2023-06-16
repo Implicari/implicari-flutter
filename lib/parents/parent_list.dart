@@ -46,7 +46,7 @@ class _ParentList extends State<ParentList> {
                       size: 24,
                     ),
                     SizedBox(width: 16),
-                    Text('No hay estudiantes', style: TextStyle(color: Colors.grey)),
+                    Text('No hay apoderados', style: TextStyle(color: Colors.grey)),
                   ],
                 ),
               )

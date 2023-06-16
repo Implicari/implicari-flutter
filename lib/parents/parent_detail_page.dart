@@ -76,6 +76,12 @@ class ParentDetail extends StatelessWidget {
                     parent.run,
                     style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
+                  const SizedBox(height: 10),
+                  const Text('Correo electrónico'),
+                  Text(
+                    parent.user!.email,
+                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
                 ],
               ),
             ),
