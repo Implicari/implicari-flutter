@@ -1,8 +1,11 @@
+import 'package:implicari/model/user_model.dart';
+
 class Message {
   int? id;
   late String subject;
   String? body;
-  DateTime? sentAt;
+  DateTime? createdAt;
+  User? sender;
 
   Message({
     required this.subject,
@@ -13,7 +16,8 @@ class Message {
     id = json['id'];
     subject = json['subject'];
     body = json['body'];
-    sentAt = DateTime.parse(json['sent_at']);
+    createdAt = DateTime.parse(json['created_at']);
+    sender = User.fromJson(json['sender']);
   }
 
   Map<String, dynamic> toJson() {

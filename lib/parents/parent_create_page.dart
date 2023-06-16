@@ -1,28 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:implicari/repository/message_repository.dart';
+import 'package:implicari/repository/parent_repository.dart';
 
-class MessageCreatePage extends StatefulWidget {
-  final int courseId;
+class ParentCreatePage extends StatefulWidget {
+  final int studentId;
 
-  const MessageCreatePage({super.key, required this.courseId});
+  const ParentCreatePage({super.key, required this.studentId});
 
   @override
-  State<MessageCreatePage> createState() => _MessageCreatePage();
+  State<ParentCreatePage> createState() => _ParentCreatePage();
 }
 
-class _MessageCreatePage extends State<MessageCreatePage> {
+class _ParentCreatePage extends State<ParentCreatePage> {
   final _formKey = GlobalKey<FormState>();
 
-  final _subjectController = TextEditingController();
-  final _messageController = TextEditingController();
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
+  final _runController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    final MessageRepository messageRepository = MessageRepository();
+    final ParentRepository parentRepository = ParentRepository();
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Crear mensaje'),
+        title: const Text('Crear estudiante'),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
@@ -32,33 +33,45 @@ class _MessageCreatePage extends State<MessageCreatePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextFormField(
-                controller: _subjectController,
-                // The validator receives the text that the user has entered.
+                controller: _firstNameController,
                 validator: (value) {
                   if (value == null || value.isEmpty || value.trim().isEmpty) {
-                    return 'Escriba un asunto para su mensaje';
+                    return 'Escriba un nombre de su estudiante';
                   }
                   return null;
                 },
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Asunto',
+                  labelText: 'Nombres',
                 ),
               ),
               const SizedBox(height: 20),
               TextFormField(
-                maxLines: 6,
-                controller: _messageController,
-                // The validator receives the text that the user has entered.
+                controller: _lastNameController,
                 validator: (value) {
                   if (value == null || value.isEmpty || value.trim().isEmpty) {
-                    return 'Escriba su mensaje';
+                    return 'Escriba los apellidos de su estudiante';
                   }
                   return null;
                 },
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Mensaje',
+                  labelText: 'Apellidos',
+                ),
+              ),
+              const SizedBox(height: 20),
+              TextFormField(
+                controller: _runController,
+                // The validator receives the text that the user has entered.
+                validator: (value) {
+                  if (value == null || value.isEmpty || value.trim().isEmpty) {
+                    return 'Escriba el RUN de su estudiante';
+                  }
+                  return null;
+                },
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'RUN',
                 ),
               ),
               const SizedBox(height: 20),
@@ -66,15 +79,16 @@ class _MessageCreatePage extends State<MessageCreatePage> {
                 child: ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      messageRepository
+                      parentRepository
                           .create(
-                        courseId: widget.courseId,
-                        subject: _subjectController.text,
-                        body: _messageController.text,
+                        studentId: widget.studentId,
+                        firstName: _firstNameController.text,
+                        lastName: _lastNameController.text,
+                        run: _runController.text,
                       )
                           .then((value) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Mensaje creado: ${value.subject}')),
+                          SnackBar(content: Text('Estudiante creado: ${value.firstName}')),
                         );
 
                         Navigator.of(context).pop();

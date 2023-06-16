@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:implicari/messages/message_summary.dart';
-import 'package:implicari/model/message_model.dart';
-import 'package:implicari/repository/message_repository.dart';
+import 'package:implicari/students/student_summary.dart';
+import 'package:implicari/model/student_model.dart';
+import 'package:implicari/repository/student_repository.dart';
 
-import 'message_create_page.dart';
+import 'student_create_page.dart';
 
-class LastMessages extends StatefulWidget {
+class StudentList extends StatefulWidget {
   final int courseId;
 
-  const LastMessages({super.key, required this.courseId});
+  const StudentList({super.key, required this.courseId});
 
   @override
-  State<LastMessages> createState() => _LastMessages();
+  State<StudentList> createState() => _StudentList();
 }
 
-class _LastMessages extends State<LastMessages> {
+class _StudentList extends State<StudentList> {
   @override
   Widget build(BuildContext context) {
-    final MessageRepository messageRepository = MessageRepository();
+    final StudentRepository studentRepository = StudentRepository();
 
-    return FutureBuilder<List<Message>>(
-      future: messageRepository.getMessages(widget.courseId),
-      builder: (BuildContext context, AsyncSnapshot<List<Message>> snapshot) {
+    return FutureBuilder<List<Student>>(
+      future: studentRepository.getStudents(widget.courseId),
+      builder: (BuildContext context, AsyncSnapshot<List<Student>> snapshot) {
         List<Widget> children;
 
         if (snapshot.hasData && snapshot.data != null) {
@@ -46,13 +46,13 @@ class _LastMessages extends State<LastMessages> {
                       size: 24,
                     ),
                     SizedBox(width: 16),
-                    Text('No hay mensajes', style: TextStyle(color: Colors.grey)),
+                    Text('No hay estudiantes', style: TextStyle(color: Colors.grey)),
                   ],
                 ),
               )
             ];
           } else {
-            children = snapshot.data!.map((message) => MessageSummary(message: message)).toList();
+            children = snapshot.data!.map((student) => StudentSummary(student: student)).toList();
           }
         } else if (snapshot.hasError) {
           children = <Widget>[
@@ -90,7 +90,7 @@ class _LastMessages extends State<LastMessages> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text(
-                    'Últimos mensajes',
+                    'Estudiantes',
                     style: TextStyle(fontWeight: FontWeight.bold),
                     textAlign: TextAlign.left,
                   ),
@@ -100,7 +100,7 @@ class _LastMessages extends State<LastMessages> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => MessageCreatePage(courseId: widget.courseId),
+                          builder: (context) => StudentCreatePage(courseId: widget.courseId),
                         ),
                       ).then((value) => setState(() {}));
                     },

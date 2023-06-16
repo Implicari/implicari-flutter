@@ -5,6 +5,7 @@ import 'package:implicari/messages/last_messages.dart';
 
 import 'package:implicari/repository/course_repository.dart';
 import 'package:implicari/model/course_model.dart';
+import 'package:implicari/students/student_list.dart';
 
 class CourseDetailPage extends StatefulWidget {
   final int id;
@@ -69,6 +70,8 @@ class _CourseDetailPage extends State<CourseDetailPage> {
           EventsUpcoming(courseId: widget.id),
           const SizedBox(height: 20),
           LastMessages(courseId: widget.id),
+          const SizedBox(height: 20),
+          StudentList(courseId: widget.id),
         ],
       ),
     );

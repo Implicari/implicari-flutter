@@ -36,8 +36,6 @@ abstract class ImplicariRepository {
       body: jsonEncode(body),
     );
 
-    print(response.statusCode);
-
     if (response.statusCode == 200 || response.statusCode == 201) {
       return json.decode(utf8.decode(response.bodyBytes));
     } else {
@@ -51,8 +49,6 @@ abstract class ImplicariRepository {
       headers: headers,
       body: jsonEncode(body),
     );
-
-    print(response.statusCode);
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       return json.decode(utf8.decode(response.bodyBytes));

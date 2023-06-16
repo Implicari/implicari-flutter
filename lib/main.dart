@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:implicari/courses/course_list_page.dart';
 
 import 'package:implicari/repository/user_repository.dart';
 import 'package:implicari/bloc/authentication_bloc.dart';
@@ -15,8 +14,7 @@ void main() {
 
   runApp(BlocProvider<AuthenticationBloc>(
     create: (context) {
-      return AuthenticationBloc(userRepository: userRepository)
-        ..add(AppStarted());
+      return AuthenticationBloc(userRepository: userRepository)..add(AppStarted());
     },
     child: App(userRepository: userRepository),
   ));

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:implicari/events/event_detail_page.dart';
 import 'package:implicari/model/event_model.dart';
 import 'package:intl/intl.dart';
 
@@ -24,46 +25,54 @@ class EventSummary extends StatelessWidget {
       );
     }
 
-    return Card(
-      shape: RoundedRectangleBorder(
-        side: BorderSide(
-          color: Theme.of(context).colorScheme.primary,
-        ),
-        borderRadius: const BorderRadius.all(Radius.circular(12)),
-      ),
-      color: Colors.white,
-      child: Column(
-        children: <Widget>[
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                child: Column(
-                  children: [
-                    Text(formatMonth.format(event.date).toUpperCase()),
-                    Text(
-                      event.date.day.toString(),
-                      style: const TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    // Text(course.nextEvent.time),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(event.name),
-                    timeWidget,
-                  ],
-                ),
-              ),
-            ],
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => EventDetailPage(eventId: event.id!)),
+        );
+      },
+      child: Card(
+        shape: RoundedRectangleBorder(
+          side: BorderSide(
+            color: Theme.of(context).colorScheme.primary,
           ),
-        ],
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
+        ),
+        color: Colors.white,
+        child: Column(
+          children: <Widget>[
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  child: Column(
+                    children: [
+                      Text(formatMonth.format(event.date).toUpperCase()),
+                      Text(
+                        event.date.day.toString(),
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      // Text(course.nextEvent.time),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(event.name),
+                      timeWidget,
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:implicari/messages/message_detail_page.dart';
-import 'package:implicari/model/message_model.dart';
+import 'package:implicari/parents/parent_detail_page.dart';
+import 'package:implicari/model/parent_model.dart';
 
-class MessageSummary extends StatelessWidget {
-  final Message message;
+class ParentSummary extends StatelessWidget {
+  final Parent parent;
 
-  const MessageSummary({super.key, required this.message});
+  const ParentSummary({super.key, required this.parent});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class MessageSummary extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => MessageDetailPage(messageId: message.id!)),
+          MaterialPageRoute(builder: (context) => ParentDetailPage(parentId: parent.id)),
         );
       },
       child: Card(
@@ -30,21 +30,14 @@ class MessageSummary extends StatelessWidget {
               children: [
                 const Padding(
                   padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                  child: Icon(Icons.email),
+                  child: Icon(Icons.child_care),
                 ),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(message.subject),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          const Icon(Icons.access_time, color: Colors.grey, size: 14),
-                          const SizedBox(width: 8),
-                          Text(message.createdAt.toString()),
-                        ],
-                      ),
+                      Text('${parent.firstName} ${parent.lastName}'),
+                      Text(parent.run),
                     ],
                   ),
                 ),

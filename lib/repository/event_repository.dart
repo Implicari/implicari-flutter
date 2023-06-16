@@ -18,8 +18,8 @@ class EventRepository extends ImplicariRepository {
     return results.map((e) => Event.fromJson(e)).toList();
   }
 
-  Future<Event> getEvent(int courseId, int eventId) async {
-    final Map<String, dynamic> data = await getAuth('/api/courses/$courseId/events/$eventId');
+  Future<Event> getEvent(int eventId) async {
+    final Map<String, dynamic> data = await getAuth('/api/events/$eventId');
 
     return Event.fromJson(data);
   }

@@ -37,9 +37,9 @@ class _EventsUpcoming extends State<EventsUpcoming> {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 padding: const EdgeInsets.all(10.0),
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     Icon(
                       Icons.error_outline,
                       color: Colors.grey,

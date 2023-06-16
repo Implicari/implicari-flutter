@@ -11,8 +11,8 @@ class MessageRepository extends ImplicariRepository {
     return results.map((e) => Message.fromJson(e)).toList();
   }
 
-  Future<Message> getMessage(int courseId, int messageId) async {
-    final Map<String, dynamic> data = await getAuth('/api/courses/$courseId/messages/$messageId');
+  Future<Message> getMessage(int messageId) async {
+    final Map<String, dynamic> data = await getAuth('/api/messages/$messageId/');
 
     return Message.fromJson(data);
   }
