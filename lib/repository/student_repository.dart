@@ -11,6 +11,13 @@ class StudentRepository extends ImplicariRepository {
     return results.map((e) => Student.fromJson(e)).toList();
   }
 
+  Future<List<Student>> getParentStudents(int courseId) async {
+    final data = await getAuth('/api/courses/$courseId/parent-students/');
+    final List results = data['results'];
+
+    return results.map((e) => Student.fromJson(e)).toList();
+  }
+
   Future<Student> getStudent(int studentId) async {
     final Map<String, dynamic> data = await getAuth('/api/students/$studentId/');
 

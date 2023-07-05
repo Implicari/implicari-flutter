@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:implicari/courses/course_detail_page.dart';
+import 'package:implicari/courses/course_parent_detail_page.dart';
 import 'package:implicari/model/course_model.dart';
 
-class CourseSummary extends StatelessWidget {
+class CourseParentSummary extends StatelessWidget {
   final Course course;
-  final IconData icon;
 
-  const CourseSummary({super.key, required this.course, required this.icon});
+  const CourseParentSummary({super.key, required this.course});
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +26,9 @@ class CourseSummary extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Icon(icon),
+              const Icon(Icons.escalator_warning),
               const SizedBox(width: 20),
               Text(course.name),
-              Text(course.id.toString()),
             ],
           ),
         ),
@@ -39,7 +37,7 @@ class CourseSummary extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => CourseDetailPage(
+            builder: (context) => CourseParentDetailPage(
               id: course.id,
             ),
           ),

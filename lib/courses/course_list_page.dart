@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:implicari/courses/course_create_page.dart';
-import 'package:implicari/courses/course_summary.dart';
+import 'package:implicari/courses/course_parent_summary.dart';
+import 'package:implicari/courses/course_teacher_summary.dart';
 
 import 'package:implicari/repository/course_repository.dart';
 import 'package:implicari/model/course_model.dart';
@@ -18,8 +19,7 @@ class _CourseListPageState extends State<CourseListPage> {
   late Future<List<Course>> getTeacherCourses;
   late Future<List<Course>> getParentCourses;
 
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      GlobalKey<RefreshIndicatorState>();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
 
   @override
   void initState() {
@@ -41,20 +41,36 @@ class _CourseListPageState extends State<CourseListPage> {
       },
       child: ListView(
         children: [
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+            child: Text(
+              'Profesor',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.left,
+            ),
+          ),
           FutureBuilder<List<Course>>(
             future: getTeacherCourses,
-            builder:
-                (BuildContext context, AsyncSnapshot<List<Course>> snapshot) {
-              return createBody(
-                  context, snapshot, 'Profesor', Icons.co_present);
+            builder: (BuildContext context, AsyncSnapshot<List<Course>> snapshot) {
+              return courseTeacherBuilder(context, snapshot);
             },
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+            child: Text(
+              'Apoderado',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.left,
+            ),
           ),
           FutureBuilder<List<Course>>(
             future: getParentCourses,
-            builder:
-                (BuildContext context, AsyncSnapshot<List<Course>> snapshot) {
-              return createBody(
-                  context, snapshot, 'Apoderado', Icons.escalator_warning);
+            builder: (BuildContext context, AsyncSnapshot<List<Course>> snapshot) {
+              return courseParentBuilder(context, snapshot);
             },
           ),
           const SizedBox(height: 40),
@@ -80,33 +96,36 @@ class _CourseListPageState extends State<CourseListPage> {
     );
   }
 
-  Widget createBody(BuildContext context, AsyncSnapshot<List<Course>> snapshot,
-      String title, IconData icon) {
+  Widget courseTeacherBuilder(BuildContext context, AsyncSnapshot<List<Course>> snapshot) {
     if (snapshot.hasError) {
       return Center(child: Text('Error: ${snapshot.error}'));
     } else if (snapshot.hasData) {
       List<Course> courses = snapshot.data ?? [];
 
-      return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10, top: 20),
-              child: Text(
-                title,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.left,
-              ),
-            ),
-            ...courses
-                .map((course) => CourseSummary(course: course, icon: icon))
-                .toList(),
-          ],
-        ),
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: courses.map((course) => CourseTeacherSummary(course: course)).toList(),
+      );
+    } else {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+  }
+
+  Widget courseParentBuilder(BuildContext context, AsyncSnapshot<List<Course>> snapshot) {
+    if (snapshot.hasError) {
+      return Center(child: Text('Error: ${snapshot.error}'));
+    } else if (snapshot.hasData) {
+      List<Course> courses = snapshot.data ?? [];
+
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: courses
+            .map(
+              (course) => CourseParentSummary(course: course),
+            )
+            .toList(),
       );
     } else {
       return const Center(

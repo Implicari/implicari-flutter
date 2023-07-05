@@ -3,8 +3,6 @@ import 'package:implicari/events/event_summary.dart';
 import 'package:implicari/model/event_model.dart';
 import 'package:implicari/repository/event_repository.dart';
 
-import 'event_create_page.dart';
-
 class EventsUpcoming extends StatefulWidget {
   final int courseId;
 
@@ -84,34 +82,12 @@ class _EventsUpcoming extends State<EventsUpcoming> {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    'Próximo evento',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.left,
-                  ),
-                  ElevatedButton(
-                    child: const Text('crear'),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => EventCreatePage(courseId: widget.courseId),
-                        ),
-                      ).then((value) => setState(() {}));
-                    },
-                  ),
-                ],
-              ),
+            const Text(
+              'Próximo evento',
+              style: TextStyle(fontWeight: FontWeight.bold),
+              textAlign: TextAlign.left,
             ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(children: children),
-            ),
+            Column(children: children),
           ],
         );
       },

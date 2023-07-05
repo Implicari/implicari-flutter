@@ -1,4 +1,4 @@
-import 'package:implicari/model/event_model.dart';
+import 'package:implicari/model/user_model.dart';
 
 class Course {
   late int id;
@@ -27,20 +27,16 @@ class Course {
 class CourseRetrieve {
   late int id;
   late String name;
-  Event? nextEvent;
+  late User teacher;
 
   CourseRetrieve({
     required this.id,
     required this.name,
-    required this.nextEvent,
   });
 
   CourseRetrieve.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
-
-    if (json['next_event'] != null) {
-      nextEvent = Event.fromJson(json['next_event']);
-    }
+    teacher = User.fromJson(json['teacher']);
   }
 }
